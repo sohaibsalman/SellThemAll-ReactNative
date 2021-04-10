@@ -7,7 +7,7 @@ import SubmitButton from "../components/SubmitButton";
 import AppFormField from "../components/AppFormField";
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string().required().label("Name"),
+  name: Yup.string().required().min(1).label("Name"),
   email: Yup.string().required().email().label("Email"),
   password: Yup.string().required().min(4).label("Password"),
 });
@@ -42,7 +42,7 @@ function RegisterScreen() {
           name="password"
           secureTextEntry
         />
-        <SubmitButton title="Login" />
+        <SubmitButton title="Register" />
       </AppForm>
     </Screen>
   );
