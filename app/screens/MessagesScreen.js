@@ -9,14 +9,16 @@ import Screen from "../components/Screen";
 const initialMessages = [
   {
     id: 1,
-    title: "T1",
-    description: "D1",
+    title: "Sohaib Salman",
+    description:
+      "This is a dummy message. Lets see how it looks like on our subititle",
     image: require("../assets/sohaib.jpg"),
   },
   {
     id: 2,
-    title: "T2",
-    description: "D2",
+    title: "Sohaib Salman",
+    description:
+      "This is a dummy message. Lets see how it looks like on our subititle",
     image: require("../assets/sohaib.jpg"),
   },
 ];

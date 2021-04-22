@@ -14,12 +14,21 @@ import Screen from "./Screen";
 import { FlatList } from "react-native-gesture-handler";
 import PickerItem from "./PickerItem";
 
-function AppPicker({ icon, items, onSelectItem, placeholder, selectedItem }) {
+function AppPicker({
+  icon,
+  items,
+  numberOfColumns = 1,
+  onSelectItem,
+  placeholder,
+  PickerItemComponent = PickerItem,
+  selectedItem,
+  width = "100%",
+}) {
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <React.Fragment>
       <TouchableWithoutFeedback onPress={() => setModalVisible(true)}>
-        <View style={styles.contaier}>
+        <View style={[styles.contaier, { width }]}>
           {icon && (
             <MaterialCommunityIcons
               name={icon}
@@ -28,9 +37,11 @@ function AppPicker({ icon, items, onSelectItem, placeholder, selectedItem }) {
               color={defaultStyles.colors.medium}
             />
           )}
-          <AppText style={styles.text}>
-            {selectedItem ? selectedItem.label : placeholder}
-          </AppText>
+          {selectedItem ? (
+            <AppText style={styles.text}>{selectedItem.label}</AppText>
+          ) : (
+            <AppText style={styles.placeholder}>{placeholder}</AppText>
+          )}
           <MaterialCommunityIcons
             name="chevron-down"
             size={20}
@@ -43,9 +54,11 @@ function AppPicker({ icon, items, onSelectItem, placeholder, selectedItem }) {
           <Button title="Close" onPress={() => setModalVisible(false)} />
           <FlatList
             data={items}
+            numColumns={numberOfColumns}
             keyExtractor={(item) => item.value.toString()}
             renderItem={({ item }) => (
-              <PickerItem
+              <PickerItemComponent
+                item={item}
                 label={item.label}
                 onPress={() => {
                   setModalVisible(false);
@@ -64,7 +77,6 @@ const styles = StyleSheet.create({
   contaier: {
     backgroundColor: defaultStyles.colors.light,
     borderRadius: 25,
-    width: "100%",
     padding: 15,
     flexDirection: "row",
     marginVertical: 10,
@@ -72,6 +84,10 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 10,
+  },
+  placeholder: {
+    color: defaultStyles.colors.medium,
+    flex: 1,
   },
   text: {
     flex: 1,
